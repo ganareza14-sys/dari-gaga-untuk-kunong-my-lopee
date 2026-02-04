@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday My Love</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      animation: fadeInDown 1.5s ease;
+    }
+
+    h2 {
+      font-weight: normal;
+      margin-bottom: 30px;
+      animation: fadeIn 2s ease;
+    }
+
+    .heart {
+      font-size: 60px;
+      animation: pulse 1s infinite;
+    }
+
+    .message {
+      max-width: 600px;
+      margin: 30px auto;
+      font-size: 1.2em;
+      line-height: 1.6;
+      animation: fadeIn 3s ease;
+    }
+
+    button {
+      background: white;
+      color: #ff4b5c;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .gallery img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confetti"></canvas>
+  <div class="container">
+    <h1>Happy Birthday, Sayang ❤️</h1>
+    <h2>Hari ini dunia lebih indah karena kamu lahir</h2>
+
+    <div class="heart">💖</div>
+
+    <div class="message">
+      Terima kasih sudah hadir di hidup aku, sudah sabar sama aku, dan selalu jadi alasan aku senyum tiap hari.
+      Semoga semua hal baik di dunia datang ke kamu tahun ini. Aku selalu di sini buat kamu.
+    </div>
+
+    <button onclick="playMusic()">Putar Lagu Kita 🎵</button>
+
+    <div class="gallery">
+      <img src="foto1.jpg" alt="Kenangan 1" />
+      <img src="foto2.jpg" alt="Kenangan 2" />
+      <img src="foto3.jpg" alt="Kenangan 3" />
+    </div>
+  </div>
+
+  <audio id="music" src="lagu.mp3"></audio>
+
+  <script>
+    function playMusic() {
+      document.getElementById('music').play();
+    }
+
+    // Confetti effect
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let pieces = [];
+    for (let i = 0; i < 100; i++) {
+      pieces.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 8 + 2,
+        speed: Math.random() * 3 + 1
+      });
+    }
+
+    function updateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'white';
+      pieces.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        p.y += p.speed;
+        if (p.y > canvas.height) p.y = 0;
+      });
+      requestAnimationFrame(updateConfetti);
+    }
+
+    updateConfetti();
+  </script>
+</body>
+</html>
